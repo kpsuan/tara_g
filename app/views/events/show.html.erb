@@ -1,0 +1,20 @@
+<h1><%= @event.name %></h1>
+<p>Date: <%= @event.date %></p>
+<p>Location: <%= @event.location %></p>
+<p>Creator: <%= @event.creator.email %></p>
+
+<h2>Attendees:</h2>
+<ul>
+  <% @event.attendees.each do |attendee| %>
+    <li><%= attendee.email %></li>
+  <% end %>
+</ul>
+
+<% if current_user %>
+  <% if @event.attendees.include?(current_user) %>
+    <%= button_to "Remove Attendance", event_attend_path(@event), method: :delete %>
+  <% else %>
+    <%= button_to "Attend Event", event_attend_path(@event), method: :post %>
+  <% end %>
+<% end %>
+
